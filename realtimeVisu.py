@@ -92,6 +92,7 @@ def main():
 
     vis = o3d.visualization.Visualizer()
     vis.create_window()
+    vis.get_render_option().mesh_show_back_face = True
     # Démarrer le flux de nuages de points en direct
     point_cloud_stream = simulate_point_cloud_stream()
     points = o3d.geometry.PointCloud()
@@ -101,7 +102,9 @@ def main():
     triangles = o3d.utility.Vector3iVector([[0, 1, 2], [0, 2, 3]])
     plane = o3d.geometry.TriangleMesh(vertices, triangles)
 
+    mesh_frame = o3d.geometry.TriangleMesh.create_coordinate_frame(size=10.0, origin=[0, 0, 0])
 
+    vis.add_geometry(mesh_frame)
     vis.add_geometry(points)
     vis.add_geometry(plane)
     threshold = 0.05
@@ -114,11 +117,17 @@ def main():
         inlier_cloud, outlier_cloud, plane_model = extract_plane(pcd)
         
         PLANE_SIZE = 20
+        vect1 = np.array([ PLANE_SIZE,  PLANE_SIZE,( PLANE_SIZE*plane_model[0]+PLANE_SIZE*plane_model[1]+plane_model[3])/(-plane_model[2])])
+        vect2 = np.array([-PLANE_SIZE,  PLANE_SIZE,(-PLANE_SIZE*plane_model[0]+PLANE_SIZE*plane_model[1]+plane_model[3])/(-plane_model[2])])
+        vect1 /= np.sqrt(vect1[0]**2 + vect1[1]**2 + vect1[2]**2)
+        vect2 /= np.sqrt(vect2[0]**2 + vect2[1]**2 + vect2[2]**2)
 
-        plane.vertices = o3d.utility.Vector3dVector([[ PLANE_SIZE,  PLANE_SIZE,( PLANE_SIZE*plane_model[0]+PLANE_SIZE*plane_model[1]+plane_model[3])/(-plane_model[2])],
-                                        [-PLANE_SIZE,  PLANE_SIZE,(-PLANE_SIZE*plane_model[0]+PLANE_SIZE*plane_model[1]+plane_model[3])/(-plane_model[2])],
-                                        [-PLANE_SIZE, -PLANE_SIZE,(-PLANE_SIZE*plane_model[0]-PLANE_SIZE*plane_model[1]+plane_model[3])/(-plane_model[2])],
-                                        [ PLANE_SIZE, -PLANE_SIZE,( PLANE_SIZE*plane_model[0]-PLANE_SIZE*plane_model[1]+plane_model[3])/(-plane_model[2])]])
+
+        plane.vertices = o3d.utility.Vector3dVector([vect1*PLANE_SIZE,
+                                        vect2*PLANE_SIZE,
+                                        -vect1*PLANE_SIZE,
+                                        -vect2*PLANE_SIZE])
+
         plane.compute_vertex_normals()
         vis.update_geometry(plane)
 
