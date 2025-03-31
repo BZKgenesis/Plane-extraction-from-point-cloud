@@ -109,7 +109,7 @@ def main():
     vis.add_geometry(plane)
     threshold = 0.05
     icp_iteration = 100
-    save_image = False
+    save_image = False 
 
     # Boucle principale pour traiter et visualiser les nuages de points en temps réel
     for pcd in point_cloud_stream:
