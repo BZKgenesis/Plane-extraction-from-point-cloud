@@ -23,14 +23,14 @@ def ransac_plane(points, num_iterations=100, threshold=0.01):
     max_inliers = 0
 
     for _ in range(num_iterations):
-        # Step 1: Select three random points
+        # Etape 1: selectionner 3 points aléatoires
         indices = np.random.choice(num_points, 3, replace=False)
         sample_points = points[indices]
 
-        # Step 2: Fit a plane to the selected points
+        # Etape 2: créer un plan qui s'adapte au mieu aux 3 points
         normal, offset = fit_plane(sample_points)
 
-        # Step 3: Count inliers
+        # Step 3: COmpter les "inliers"
         distances = np.abs(points.dot(normal) + offset)
         inliers = points[distances < threshold]
         num_inliers = inliers.shape[0]
