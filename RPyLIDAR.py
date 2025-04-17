@@ -501,13 +501,6 @@ class RPyLIDAR:
         self.lastRightClickTime = self.startTime
         self.lastMidClickTime = self.startTime
 
-        pwd = os.path.dirname(os.path.realpath(__file__))
-        #txtOutput = open(pwd + "/points.csv", 'w')     # LINUX or MAC
-        txtOutput = open(pwd + "\\points.csv", 'w')     # WINDOWS
-        txtOutput.write("//Scan,X,Y,Z,Intensity\n")     #header line, works well in CloudCompare (www.cloudcompare.org)
-        if self.debugMode:
-            #dataOutput = open(pwd + "/data.bin" , 'bw')     # LINUX or MAC
-            dataOutput = open(pwd + "\\data.bin" , 'bw')    # WINDOWS
         commandBytes = '\xA5\x20'
         commandBytes = self.add_checksum(commandBytes)
         self.COM.write(commandBytes)
@@ -544,8 +537,6 @@ class RPyLIDAR:
                 bufferDataChunk = self.COM.read(self.COM.inWaiting())
                 chunkLength = len(bufferDataChunk)
                 if chunkLength > 0:
-                    if self.debugMode:
-                        dataOutput.write(bufferDataChunk)
                     bufferData = bytearray(bufferDataChunk)
                     
                     for i in range(0,chunkLength):
@@ -584,17 +575,16 @@ class RPyLIDAR:
                                 Yv = math.sin(angle - (self.aziCorr * math.pi / 180.0)) * dist
                                 self.totalNumPts += 1
                                 self.new_points.append([Xv,Yv])
-                                txtOutput.write(str(self.scanCount) + "," + str(X) + "," + str(Y) + ",0," + str(quality) + "\n")
+                                yield (self.scanCount ,X,Y ,0,quality)
+
+                                
                             else:
                                 self.zeroPts += 1
                         byteCount += 1
-                              
+                        
                 stopper = self.getControlInputs(stopper)
                                                             
         pygame.quit()
-        txtOutput.close()
-        if self.debugMode:
-            dataOutput.close()
 
     def calcAndAddPoints(self,dist1,dist2,delta1,delta2,previousAngle,refAngle,txtOutput):
         angleDiff = float(refAngle - previousAngle)
