@@ -1,5 +1,3 @@
-#! /usr/bin/python3
-
 ## Author: Ryan Brazeal
 ## Email: ryan.brazeal@ufl.edu
 ## Date Started: Nov 24th, 2018
@@ -583,7 +581,7 @@ class RPyLIDAR:
                         byteCount += 1
                         
                 stopper = self.getControlInputs(stopper)
-                                                            
+                
         pygame.quit()
 
     def calcAndAddPoints(self,dist1,dist2,delta1,delta2,previousAngle,refAngle,txtOutput):
