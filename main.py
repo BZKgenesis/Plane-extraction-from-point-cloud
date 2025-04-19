@@ -22,9 +22,9 @@ def packScans():
             scanIndex = scan[0]
         currentScan.append((scan[0], scan[1], scan[2], scan[3], scan[4]))
 
-SCREEN_SIZE = 700
+WINDOW_SIZE = 700
 pygame.init()
-screen = pygame.display.set_mode([SCREEN_SIZE,SCREEN_SIZE])
+screen = pygame.display.set_mode([WINDOW_SIZE,WINDOW_SIZE])
 screen.fill(BLACK)
 pygame.display.update()
 
@@ -58,7 +58,7 @@ while (running):
         for point in points:
             centeredPoint = (point[1]-centre[0], point[2]-centre[1])
             reducedPoint = (centeredPoint[0]/(var*SCALE), centeredPoint[1]/(var*SCALE))
-            rect = pygame.Rect((reducedPoint[0])*SCREEN_SIZE + SCREEN_SIZE/2, (reducedPoint[1])*SCREEN_SIZE + SCREEN_SIZE/2, 1, 1)
+            rect = pygame.Rect((reducedPoint[0])*WINDOW_SIZE + WINDOW_SIZE/2, (reducedPoint[1])*WINDOW_SIZE + WINDOW_SIZE/2, 1, 1)
             pygame.draw.rect(screen, WHITE, rect, 0)
 
     # Affichage

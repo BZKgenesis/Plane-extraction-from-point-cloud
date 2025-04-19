@@ -1,6 +1,14 @@
 import random
 import math
 import pyautogui
+import screeninfo
+
+MONITOR_INDEX = 0
+
+monitor = screeninfo.get_monitors()[MONITOR_INDEX]
+
+SCREEN_SIZE = (monitor.width, monitor.height)
+
 
 def getCenterVar(points):
     minX = float("inf")
@@ -24,7 +32,7 @@ def lerpVector(a, b, t):
 
 def getRandomPoint(center, radiusMin, radiusMax):
     angle = random.uniform(0, 2 * 3.14)  # Angle in radians
-    posMouse = ((pyautogui.position()[0]-960)/960, (pyautogui.position()[1]-540)/540)
+    posMouse = ((pyautogui.position()[0]-(SCREEN_SIZE[0]/2))/(SCREEN_SIZE[0]/2), (pyautogui.position()[1]-(SCREEN_SIZE[1]/2))/(SCREEN_SIZE[1]/2))
     angleMouse = math.atan2(posMouse[1], posMouse[0]) % (2 * math.pi)
     #print(angleMouse, angle)
     raw_r=max(- 2*min(abs(angleMouse - angle),abs(angleMouse + math.pi*2 - angle),abs(angleMouse-math.pi*2 - angle))+2,1)
