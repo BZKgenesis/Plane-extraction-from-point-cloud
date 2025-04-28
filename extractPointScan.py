@@ -1,16 +1,20 @@
 import time
 import RPyLIDAR
 from utils import getRandomPoint
+import copy
 
 def fakeScan():
     scanIndex = 0
     index = 1
+    RADIUS = 1
+    RADIUS_OFFSET = 0.1
+    NB_POINT=360
     while True:
         index +=1
         time.sleep(0.001)
-        point = getRandomPoint((1, 1), 0.24, 0.25)
+        point = getRandomPoint((1, 1), RADIUS, RADIUS_OFFSET)
         yield (scanIndex, point[0], point[1], 0, 47)
-        if index >= 360:
+        if index >= NB_POINT:
             index = 0
             scanIndex += 1
 

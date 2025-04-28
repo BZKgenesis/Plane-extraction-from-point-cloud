@@ -573,7 +573,7 @@ class RPyLIDAR:
                                 Yv = math.sin(angle - (self.aziCorr * math.pi / 180.0)) * dist
                                 self.totalNumPts += 1
                                 self.new_points.append([Xv,Yv])
-                                yield (self.scanCount ,X,Y ,0,quality)
+                                yield (self.scanCount ,X,Y ,0,quality)                                      # LIGNE MODIFIEE
 
                                 
                             else:

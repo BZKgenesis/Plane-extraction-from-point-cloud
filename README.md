@@ -24,17 +24,17 @@ Ce projet permet de simuler et de visualiser des nuages de points générés par
 Installez les dépendances avec pip :
 
 ```bash
-pip install pygame pyautogui
+pip install -r requirements.txt
 ```
 
-Pour `RPyLIDAR`, consultez sa [documentation officielle](https://github.com/your-link-here) pour les instructions d'installation.
+Pour `RPyLIDAR`, consultez sa [documentation officielle](https://github.com/ryan-brazeal-ufl/RPyLIDAR/blob/master/README.md) pour les instructions d'installation.
 
 ## Utilisation
 
 1. Clonez le dépôt :
 
    ```bash
-   git clone https://github.com/votre-lien-repo.git
+   git clone https://github.com/BZKgenesis/Plane-extraction-from-point-cloud.git
    cd Plane-extraction-from-point-cloud
    ```
 
