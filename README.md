@@ -27,6 +27,8 @@ Installez les dépendances avec pip :
 pip install -r requirements.txt
 ```
 
+*le dossier `requirements.txt` est uniquement fait pour le projet de visualisation des scans. Il ne prend pas en charge le projet d'extraction de plan depuis un nuage de point*
+
 Pour `RPyLIDAR`, consultez sa [documentation officielle](https://github.com/ryan-brazeal-ufl/RPyLIDAR/blob/master/README.md) pour les instructions d'installation.
 
 ## Utilisation
